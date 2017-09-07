@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>XdgShellV6Config.qml</file>
+    </qresource>
+</RCC>
