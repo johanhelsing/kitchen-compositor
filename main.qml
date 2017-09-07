@@ -183,7 +183,7 @@ WaylandCompositor {
     WlShell {
         id: wlShell
         onWlShellSurfaceCreated: {
-            console.log("wlshellsurface created", shellSurface);
+            console.log("wl_shell_surface created", shellSurface);
             shellSurfaceItem.createObject(surfaceArea, { "shellSurface": shellSurface } );
         }
     }
@@ -192,7 +192,7 @@ WaylandCompositor {
         id: xdgShellV5
         property variant lastSurface
         onXdgSurfaceCreated: {
-            console.log("xdgtoplevel v5 created", xdgSurface);
+            console.log("xdg_surface v5 created", xdgSurface);
             shellSurfaceItem.createObject(surfaceArea, { "shellSurface": xdgSurface } );
             lastSurface = xdgSurface;
         }
@@ -202,7 +202,7 @@ WaylandCompositor {
         id: xdgShellV6
         property variant lastSurface
         onToplevelCreated: {
-            console.log("xdgtoplevel v6 created", xdgSurface, toplevel);
+            console.log("zxdg_toplevel_v6 created", xdgSurface, toplevel);
             shellSurfaceItem.createObject(surfaceArea, { "shellSurface": xdgSurface } );
             lastSurface = xdgSurface;
         }
@@ -211,46 +211,15 @@ WaylandCompositor {
     Component {
         id: shellSurfaceItem
         ShellSurfaceItem {
+            id: ssItem
 //            autoCreatePopupItems: true
             onSurfaceDestroyed: destroy();
             Component.onCompleted: console.log("shell surface item created");
+            WindowGeometryGizmo {
+                windowGeometry: (ssItem.shellSurface && ssItem.shellSurface.windowGeometry) || Qt.rect(0,0,0,0)
+            }
         }
     }
-
-//    Component {
-//        id: xdgSurfaceItem
-//        XdgSurfaceItem {
-//            id: xdgChrome
-//            onSurfaceDestroyed: {
-//                xdgChrome.destroy();
-//            }
-//            Rectangle { x: -5; width: 11; height: 1; color: "red" }
-//            Rectangle { y: -5; width: 1; height: 11; color: "red" }
-//
-//            Rectangle {
-//                width: xdgSurface.surface.size.width
-//                height: xdgSurface.surface.size.height
-//                color: "transparent"
-//                border {
-//                    width: 2
-//                    color: Qt.rgba(0, 1, 0, 1)
-//                }
-//            }
-//
-//            Rectangle {
-//                id: windowGeometryGizmo
-//                x: xdgSurface.windowGeometry.x
-//                y: xdgSurface.windowGeometry.y
-//                width: xdgSurface.windowGeometry.width
-//                height: xdgSurface.windowGeometry.height
-//                color: "transparent"
-//                border {
-//                    width: 2
-//                    color: "red"
-//                }
-//            }
-//        }
-//    }
 
     onSurfaceCreated: {
         lastSurface = surface;
