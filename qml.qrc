@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>XdgShellV6Config.qml</file>
         <file>WindowGeometryGizmo.qml</file>
+        <file>XdgShellV5Config.qml</file>
     </qresource>
 </RCC>
