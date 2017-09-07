@@ -28,10 +28,6 @@ ColumnLayout {
         enabled: false
     }
     RowLayout {
-        Button {
-            text: "Send maximized"
-            onClicked: xdgShellV5.lastSurface && xdgShellV5.lastSurface.requestMaximized(Qt.size(maximizeWidth.text, maximizeHeight.text))
-        }
         TextField {
             id: maximizeWidth
             inputMethodHints: Qt.ImhDigitsOnly
@@ -42,12 +38,12 @@ ColumnLayout {
             inputMethodHints: Qt.ImhDigitsOnly
             text: surfaceArea.height
         }
+        Button {
+            text: "Send maximized"
+            onClicked: xdgShellV5.lastSurface && xdgShellV5.lastSurface.requestMaximized(Qt.size(maximizeWidth.text, maximizeHeight.text))
+        }
     }
     RowLayout {
-        Button {
-            text: "Send fullscreen"
-            onClicked: xdgShellV5.lastSurface && xdgShellV5.lastSurface.requestFullscreen(Qt.size(fullscreenWidth.text, fullscreenHeight.text))
-        }
         TextField {
             id: fullscreenWidth
             inputMethodHints: Qt.ImhDigitsOnly
@@ -58,12 +54,12 @@ ColumnLayout {
             inputMethodHints: Qt.ImhDigitsOnly
             text: surfaceArea.height
         }
+        Button {
+            text: "Send fullscreen"
+            onClicked: xdgShellV5.lastSurface && xdgShellV5.lastSurface.requestFullscreen(Qt.size(fullscreenWidth.text, fullscreenHeight.text))
+        }
     }
     RowLayout {
-        Button {
-            text: "Send unmaximized"
-            onClicked: xdgShellV5.lastSurface && xdgShellV5.lastSurface.requestUnMaximized(Qt.size(unMaximizeWidth.text, unMaximizeHeight.text))
-        }
         TextField {
             id: unMaximizeWidth
             inputMethodHints: Qt.ImhDigitsOnly
@@ -73,6 +69,10 @@ ColumnLayout {
             id: unMaximizeHeight
             inputMethodHints: Qt.ImhDigitsOnly
             text: "300"
+        }
+        Button {
+            text: "Send unmaximized"
+            onClicked: xdgShellV5.lastSurface && xdgShellV5.lastSurface.requestUnMaximized(Qt.size(unMaximizeWidth.text, unMaximizeHeight.text))
         }
     }
 }

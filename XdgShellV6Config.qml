@@ -27,10 +27,6 @@ ColumnLayout {
         enabled: false
     }
     RowLayout {
-        Button {
-            text: "Send maximized"
-            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendMaximized(Qt.size(maximizeWidth.text, maximizeHeight.text))
-        }
         TextField {
             id: maximizeWidth
             inputMethodHints: Qt.ImhDigitsOnly
@@ -41,12 +37,12 @@ ColumnLayout {
             inputMethodHints: Qt.ImhDigitsOnly
             text: surfaceArea.height
         }
+        Button {
+            text: "Send maximized"
+            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendMaximized(Qt.size(maximizeWidth.text, maximizeHeight.text))
+        }
     }
     RowLayout {
-        Button {
-            text: "Send fullscreen"
-            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendFullscreen(Qt.size(fullscreenWidth.text, fullscreenHeight.text))
-        }
         TextField {
             id: fullscreenWidth
             inputMethodHints: Qt.ImhDigitsOnly
@@ -57,12 +53,12 @@ ColumnLayout {
             inputMethodHints: Qt.ImhDigitsOnly
             text: surfaceArea.height
         }
+        Button {
+            text: "Send fullscreen"
+            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendFullscreen(Qt.size(fullscreenWidth.text, fullscreenHeight.text))
+        }
     }
     RowLayout {
-        Button {
-            text: "Send unmaximized"
-            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendUnmaximized(Qt.size(unMaximizeWidth.text, unMaximizeHeight.text))
-        }
         TextField {
             id: unMaximizeWidth
             inputMethodHints: Qt.ImhDigitsOnly
@@ -72,6 +68,10 @@ ColumnLayout {
             id: unMaximizeHeight
             inputMethodHints: Qt.ImhDigitsOnly
             text: "300"
+        }
+        Button {
+            text: "Send unmaximized"
+            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendUnmaximized(Qt.size(unMaximizeWidth.text, unMaximizeHeight.text))
         }
     }
 }

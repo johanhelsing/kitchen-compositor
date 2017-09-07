@@ -86,8 +86,8 @@ WaylandCompositor {
                         Layout.fillWidth: true
                         id: bar
                         currentIndex: 0
-                        TabButton { text: "xdg-shell v6" }
-                        TabButton { text: "xdg-shell v5" }
+                        TabButton { text: "xdg-shell-v6" }
+                        TabButton { text: "xdg-shell-v5" }
                     }
 
                     StackLayout {
