@@ -233,7 +233,7 @@ WaylandCompositor {
     Component {
         id: shellSurfaceItem
         ShellSurfaceItem {
-            autoCreatePopupItems: true
+//            autoCreatePopupItems: true
             onSurfaceDestroyed: destroy();
             Component.onCompleted: console.log("shell surface item created");
         }
