@@ -73,12 +73,6 @@ WaylandCompositor {
                         anchors.fill: parent
                     }
 
-                    LevelAdjust {
-                        anchors.fill: surfaceArea
-                        source: surfaceArea
-                        gamma: Qt.vector3d(redSlider.value, greenSlider.value, blueSlider.value)
-                    }
-
                     WaylandCursorItem {
                         inputEventsEnabled: false
                         x: mouseTracker.mouseX - hotspotX
@@ -92,7 +86,6 @@ WaylandCompositor {
                         Layout.fillWidth: true
                         id: bar
                         currentIndex: 2
-                        TabButton { text: "gamma-control" }
                         TabButton { text: "xdg-shell v6" }
                         TabButton { text: "xdg-shell v5" }
                         TabButton { text: "surface-grab" }
@@ -100,21 +93,6 @@ WaylandCompositor {
 
                     StackLayout {
                         currentIndex: bar.currentIndex
-                        ColumnLayout {
-                            anchors.centerIn: parent
-                            RowLayout {
-                                Label { text: "R" }
-                                Slider { id: redSlider; to: 2; value: 1 }
-                            }
-                            RowLayout {
-                                Label { text: "G" }
-                                Slider { id: greenSlider; to: 2; value: 1 }
-                            }
-                            RowLayout {
-                                Label { text: "B" }
-                                Slider { id: blueSlider; to: 2; value: 1 }
-                            }
-                        }
 
                         XdgShellV6Config {}
 
