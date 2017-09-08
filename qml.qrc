@@ -8,5 +8,6 @@
         <file>SurfaceDetails.qml</file>
         <file>XdgSurfaceV6Config.qml</file>
         <file>WlShellSurfaceConfig.qml</file>
+        <file>ShellSurfacesInspector.qml</file>
     </qresource>
 </RCC>
