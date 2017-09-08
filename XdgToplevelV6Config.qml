@@ -66,5 +66,6 @@ ColumnLayout {
             onClicked: toplevel.sendUnmaximized(Qt.size(unMaximizeWidth.text, unMaximizeHeight.text))
         }
     }
+    Button { text: "Send close"; onClicked: toplevel.sendClose() }
 }
 
