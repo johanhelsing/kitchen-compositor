@@ -1,8 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>XdgShellV6Config.qml</file>
+        <file>XdgToplevelV6Config.qml</file>
         <file>WindowGeometryGizmo.qml</file>
-        <file>XdgShellV5Config.qml</file>
+        <file>XdgSurfaceV5Config.qml</file>
+        <file>SurfaceInterfaces.qml</file>
+        <file>SurfaceDetails.qml</file>
+        <file>XdgSurfaceV6Config.qml</file>
+        <file>WlShellSurfaceConfig.qml</file>
     </qresource>
 </RCC>

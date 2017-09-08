@@ -41,13 +41,22 @@
 import QtQuick 2.6
 import QtWayland.Compositor 1.1
 import QtQuick.Window 2.2
-import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 WaylandCompositor {
     id: comp
-    property variant lastSurface
+    property variant selectedShellSurface
+
+    onSelectedShellSurfaceChanged: {
+        console.log("Now inspecting shell surface", selectedShellSurface);
+        interfacesPage.clear(StackView.Immediate);
+        if (selectedShellSurface)
+            interfacesPage.push("qrc:/SurfaceInterfaces.qml", {shellSurface: selectedShellSurface}, StackView.ReplaceTransition);
+
+    }
+
+    ListModel { id: shellSurfaces }
 
     WaylandOutput {
         sizeFollowsWindow: true
@@ -55,8 +64,10 @@ WaylandCompositor {
             width: layout.implicitWidth
             height: layout.implicitHeight
             visible: true
+            visibility: Window.Maximized
 
             ColumnLayout {
+                spacing: 0
                 id: layout
                 anchors.fill: parent
                 WaylandMouseTracker {
@@ -71,33 +82,79 @@ WaylandCompositor {
                         id: surfaceArea
                         color: "black"
                         anchors.fill: parent
+                        Repeater {
+                            model: shellSurfaces
+                            ShellSurfaceItem {
+                                id: ssItem
+                                shellSurface: modelData
+                                onSurfaceDestroyed: {
+                                    shellSurfaces.remove(index);
+                                    if(shellSurface === selectedShellSurface)
+                                        selectedShellSurface = null;
+                                }
+                                Component.onCompleted: console.log("Shell surface item created");
+                                WindowGeometryGizmo {
+                                    windowGeometry: (ssItem.shellSurface && ssItem.shellSurface.windowGeometry) || Qt.rect(0,0,0,0)
+                                }
+                            }
+                        }
                     }
 
                     WaylandCursorItem {
                         inputEventsEnabled: false
-                        x: mouseTracker.mouseX - hotspotX
-                        y: mouseTracker.mouseY - hotspotY
+                        x: mouseTracker.mouseX
+                        y: mouseTracker.mouseY
                         seat: comp.defaultSeat
                     }
                 }
 
-                ColumnLayout {
-                    TabBar {
-                        Layout.fillWidth: true
-                        id: bar
-                        currentIndex: 0
-                        TabButton { text: "xdg-shell-v6" }
-                        TabButton { text: "xdg-shell-v5" }
+                RowLayout {
+                    spacing: 0
+                    Layout.preferredHeight: 500
+                    ListView {
+                        id: listView
+                        Layout.fillHeight: true
+                        implicitWidth: 300 //contentItem.childrenRect.width
+                        model: shellSurfaces
+                        header: ToolBar {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            Label {
+                                text: "Shell surfaces"
+                                anchors.centerIn: parent
+                            }
+                        }
+                        delegate: ItemDelegate {
+                            width: listView.width - listView.leftMargin - listView.rightMargin
+                            height: row.height
+                            highlighted: selectedShellSurface === modelData
+                            onClicked: {
+                                console.log("please show", modelData);
+                                selectedShellSurface = modelData;
+                            }
+                            RowLayout {
+                                id: row
+                                WaylandQuickItem {
+                                    Layout.margins: 16
+                                    id: thumbnail
+                                    sizeFollowsSurface: false
+                                    enabled: false
+                                    width: 32
+                                    height: 32
+                                    implicitWidth: 32
+                                    implicitHeight: 32
+                                    surface: modelData.surface
+                                }
+                                Label {
+                                    text: modelData.title || (modelData.toplevel && modelData.toplevel.title) || ("Shell surface #" + index)
+                                }
+                            }
+                        }
                     }
-
-                    StackLayout {
-                        currentIndex: bar.currentIndex
-                        XdgShellV6Config {
-                            anchors.centerIn: parent
-                        }
-                        XdgShellV5Config {
-                            anchors.centerIn: parent
-                        }
+                    StackView {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        id: interfacesPage
                     }
                 }
             }
@@ -108,44 +165,27 @@ WaylandCompositor {
         id: wlShell
         onWlShellSurfaceCreated: {
             console.log("wl_shell_surface created", shellSurface);
-            shellSurfaceItem.createObject(surfaceArea, { "shellSurface": shellSurface } );
+            shellSurfaces.append({shellSurface: shellSurface});
         }
     }
 
     XdgShellV5 {
         id: xdgShellV5
-        property variant lastSurface
         onXdgSurfaceCreated: {
             console.log("xdg_surface v5 created", xdgSurface);
-            shellSurfaceItem.createObject(surfaceArea, { "shellSurface": xdgSurface } );
-            lastSurface = xdgSurface;
+            shellSurfaces.append({shellSurface: xdgSurface});
         }
     }
 
     XdgShellV6 {
         id: xdgShellV6
-        property variant lastSurface
         onToplevelCreated: {
             console.log("zxdg_toplevel_v6 created", xdgSurface, toplevel);
-            shellSurfaceItem.createObject(surfaceArea, { "shellSurface": xdgSurface } );
-            lastSurface = xdgSurface;
-        }
-    }
-
-    Component {
-        id: shellSurfaceItem
-        ShellSurfaceItem {
-            id: ssItem
-//            autoCreatePopupItems: true
-            onSurfaceDestroyed: destroy();
-            Component.onCompleted: console.log("shell surface item created");
-            WindowGeometryGizmo {
-                windowGeometry: (ssItem.shellSurface && ssItem.shellSurface.windowGeometry) || Qt.rect(0,0,0,0)
-            }
+            shellSurfaces.append({shellSurface: xdgSurface});
         }
     }
 
     onSurfaceCreated: {
-        lastSurface = surface;
+        console.log("Surface created", surface);
     }
 }

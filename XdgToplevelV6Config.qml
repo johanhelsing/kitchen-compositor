@@ -4,28 +4,20 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
-    id: xdgShellV6Config
+    property XdgToplevelV6 toplevel
+    property string title: "zxdg_toplevel_v6"
 
-    CheckBox {
-        text: "Maximized"
-        checked: xdgShellV6.lastSurface ? xdgShellV6.lastSurface.toplevel.maximized : false
-        enabled: false
-    }
-    CheckBox {
-        text: "Fullscreen"
-        checked: xdgShellV6.lastSurface ? xdgShellV6.lastSurface.toplevel.fullscreen : false
-        enabled: false
-    }
-    CheckBox {
-        text: "Activated"
-        checked: xdgShellV6.lastSurface ? xdgShellV6.lastSurface.toplevel.activated : false
-        enabled: false
-    }
-    CheckBox {
-        text: "Resizing"
-        checked: xdgShellV6.lastSurface ? xdgShellV6.lastSurface.toplevel.resizing : false
-        enabled: false
-    }
+    Label { text: "Title: " + toplevel.title }
+    Label { text: "App id: " + toplevel.appId }
+    Label { text: "Max size: " + toplevel.maxSize }
+    Label { text: "Min size: " + toplevel.minSize }
+    Label { text: "Parent toplevel: " + toplevel.parentToplevel }
+
+    CheckBox { text: "Maximized"; checked: toplevel.maximized; enabled: false }
+    CheckBox { text: "Fullscreen"; checked: toplevel.fullscreen; enabled: false }
+    CheckBox { text: "Activated"; checked: toplevel.activated; enabled: false }
+    CheckBox { text: "Resizing"; checked: toplevel.resizing; enabled: false }
+
     RowLayout {
         TextField {
             id: maximizeWidth
@@ -39,7 +31,7 @@ ColumnLayout {
         }
         Button {
             text: "Send maximized"
-            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendMaximized(Qt.size(maximizeWidth.text, maximizeHeight.text))
+            onClicked: toplevel.sendMaximized(Qt.size(maximizeWidth.text, maximizeHeight.text))
         }
     }
     RowLayout {
@@ -55,7 +47,7 @@ ColumnLayout {
         }
         Button {
             text: "Send fullscreen"
-            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendFullscreen(Qt.size(fullscreenWidth.text, fullscreenHeight.text))
+            onClicked: toplevel.sendFullscreen(Qt.size(fullscreenWidth.text, fullscreenHeight.text))
         }
     }
     RowLayout {
@@ -71,7 +63,7 @@ ColumnLayout {
         }
         Button {
             text: "Send unmaximized"
-            onClicked: xdgShellV6.lastSurface && xdgShellV6.lastSurface.toplevel.sendUnmaximized(Qt.size(unMaximizeWidth.text, unMaximizeHeight.text))
+            onClicked: toplevel.sendUnmaximized(Qt.size(unMaximizeWidth.text, unMaximizeHeight.text))
         }
     }
 }
