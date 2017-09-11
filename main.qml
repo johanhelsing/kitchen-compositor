@@ -60,6 +60,7 @@ WaylandCompositor {
             height: layout.implicitHeight
             visible: true
             visibility: Window.Maximized
+            title: "Kitchen Compositor - " + comp.socketName
 
             ColumnLayout {
                 spacing: 0
