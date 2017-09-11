@@ -52,7 +52,9 @@ WaylandCompositor {
 
     WaylandOutput {
         sizeFollowsWindow: true
+        availableGeometry: win.contentItem.mapFromItem(surfaceArea, 0, 0, surfaceArea.width, surfaceArea.height)
         window: ApplicationWindow {
+            id: win
             width: layout.implicitWidth
             height: layout.implicitHeight
             visible: true
