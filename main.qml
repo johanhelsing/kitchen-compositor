@@ -51,6 +51,7 @@ WaylandCompositor {
     ListModel { id: shellSurfaces }
 
     WaylandOutput {
+        id: output
         sizeFollowsWindow: true
         availableGeometry: win.contentItem.mapFromItem(surfaceArea, 0, 0, surfaceArea.width, surfaceArea.height)
         window: ApplicationWindow {
@@ -83,8 +84,8 @@ WaylandCompositor {
                                 shellSurface: modelData
                                 onSurfaceDestroyed: {
                                     shellSurfaces.remove(index);
-                                    if(shellSurface === selectedShellSurface)
-                                        selectedShellSurface = null;
+                                    if(shellSurface === comp.selectedShellSurface)
+                                        comp.selectedShellSurface = null;
                                 }
                                 Component.onCompleted: console.log("Shell surface item created");
                                 WindowGeometryGizmo {
@@ -102,9 +103,71 @@ WaylandCompositor {
                     }
                 }
 
-                ShellSurfacesInspector {
-                    id: shellSurfacesInspector
+                StackLayout {
+                    id: inspectorRoot
+                    Layout.fillWidth: true
                     Layout.preferredHeight: 500
+                    currentIndex: 1
+                    Page {
+                        anchors.fill: parent
+                        header: ToolBar {
+                            Label {
+                                text: "Choose tool"
+                                anchors.centerIn: parent
+                            }
+                        }
+                        ListView {
+                            anchors.fill: parent
+                            model: inspectorRoot.count - 1
+                            delegate: ItemDelegate {
+                                text: inspectorRoot.itemAt(modelData+1).title
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                onClicked: inspectorRoot.currentIndex = modelData+1
+                            }
+                        }
+                    }
+                    Page {
+                        title: "Shell surface inspector"
+                        anchors.fill: parent
+                        id: shellSurfacesInspectorPage
+                        header: ToolBar {
+                            ToolButton {
+                                padding: 16
+                                text: "<"
+                                onClicked: inspectorRoot.currentIndex = 0
+                            }
+
+                            Label {
+                                text: "Shell Surfaces"
+                                anchors.centerIn: parent
+                            }
+                        }
+                        ShellSurfacesInspector {
+                            anchors.fill: parent
+                            id: shellSurfacesInspector
+                        }
+                    }
+                    Page {
+                        title: "Output configuration"
+                        anchors.fill: parent
+                        header: ToolBar {
+                            ToolButton {
+                                padding: 16
+                                text: "<"
+                                onClicked: inspectorRoot.currentIndex = 0
+                            }
+
+                            Label {
+                                text: "Output configuration"
+                                anchors.centerIn: parent
+                            }
+                        }
+                        OutputConfiguration {
+                            anchors.centerIn: parent
+                            output: output
+                        }
+                    }
                 }
             }
         }

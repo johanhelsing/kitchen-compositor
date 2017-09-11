@@ -9,5 +9,6 @@
         <file>XdgSurfaceV6Config.qml</file>
         <file>WlShellSurfaceConfig.qml</file>
         <file>ShellSurfacesInspector.qml</file>
+        <file>OutputConfiguration.qml</file>
     </qresource>
 </RCC>
