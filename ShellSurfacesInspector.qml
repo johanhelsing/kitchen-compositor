@@ -20,14 +20,6 @@ RowLayout {
         Layout.fillHeight: true
         implicitWidth: 300
         model: shellSurfaces
-        header: ToolBar {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            Label {
-                text: "Shell surfaces"
-                anchors.centerIn: parent
-            }
-        }
         delegate: ItemDelegate {
             width: listView.width - listView.leftMargin - listView.rightMargin
             height: row.height
