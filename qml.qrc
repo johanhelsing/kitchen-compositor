@@ -10,5 +10,6 @@
         <file>WlShellSurfaceConfig.qml</file>
         <file>ShellSurfacesInspector.qml</file>
         <file>OutputConfiguration.qml</file>
+        <file>qtquickcontrols2.conf</file>
     </qresource>
 </RCC>
