@@ -48,6 +48,7 @@ WaylandCompositor {
     id: comp
     property alias selectedShellSurface: shellSurfacesInspector.selectedShellSurface
     property bool emulateTouch: false
+    property bool showGizmos: false
 
     ListModel { id: shellSurfaces }
 
@@ -91,6 +92,7 @@ WaylandCompositor {
                                 }
                                 Component.onCompleted: console.log("Shell surface item created");
                                 WindowGeometryGizmo {
+                                    visible: comp.showGizmos
                                     windowGeometry: (ssItem.shellSurface && ssItem.shellSurface.windowGeometry) || Qt.rect(0,0,0,0)
                                 }
                                 FakeTouchArea {
@@ -175,7 +177,7 @@ WaylandCompositor {
                         }
                     }
                     Page {
-                        title: "Emulated touch"
+                        title: "Misc settings"
                         anchors.fill: parent
                         header: ToolBar {
                             ToolButton {
@@ -184,15 +186,22 @@ WaylandCompositor {
                                 onClicked: inspectorRoot.currentIndex = 0
                             }
                             Label {
-                                text: "Emulated touch"
+                                text: "Misc settings"
                                 anchors.centerIn: parent
                             }
                         }
-                        CheckBox {
-                            text: "Enabled"
+                        ColumnLayout {
                             anchors.centerIn: parent
-                            checked: comp.emulateTouch
-                            onCheckStateChanged: comp.emulateTouch = checked
+                            CheckBox {
+                                text: "Emulate touch events"
+                                checked: comp.emulateTouch
+                                onCheckStateChanged: comp.emulateTouch = checked
+                            }
+                            CheckBox {
+                                text: "Show gizmos for window geometry"
+                                checked: comp.showGizmos
+                                onCheckStateChanged: comp.showGizmos = checked
+                            }
                         }
                     }
                 }
