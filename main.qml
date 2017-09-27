@@ -47,6 +47,7 @@ import QtQuick.Layouts 1.3
 WaylandCompositor {
     id: comp
     property alias selectedShellSurface: shellSurfacesInspector.selectedShellSurface
+    property bool emulateTouch: false
 
     ListModel { id: shellSurfaces }
 
@@ -92,12 +93,17 @@ WaylandCompositor {
                                 WindowGeometryGizmo {
                                     windowGeometry: (ssItem.shellSurface && ssItem.shellSurface.windowGeometry) || Qt.rect(0,0,0,0)
                                 }
+                                FakeTouchArea {
+                                    visible: comp.emulateTouch
+                                    anchors.fill: parent
+                                    seat: comp.defaultSeat
+                                    surface: modelData.surface
+                                }
                             }
                         }
                     }
 
                     WaylandCursorItem {
-                        inputEventsEnabled: false
                         x: mouseTracker.mouseX
                         y: mouseTracker.mouseY
                         seat: comp.defaultSeat
@@ -158,7 +164,6 @@ WaylandCompositor {
                                 text: "<"
                                 onClicked: inspectorRoot.currentIndex = 0
                             }
-
                             Label {
                                 text: "Output configuration"
                                 anchors.centerIn: parent
@@ -167,6 +172,27 @@ WaylandCompositor {
                         OutputConfiguration {
                             anchors.centerIn: parent
                             output: output
+                        }
+                    }
+                    Page {
+                        title: "Emulated touch"
+                        anchors.fill: parent
+                        header: ToolBar {
+                            ToolButton {
+                                padding: 16
+                                text: "<"
+                                onClicked: inspectorRoot.currentIndex = 0
+                            }
+                            Label {
+                                text: "Emulated touch"
+                                anchors.centerIn: parent
+                            }
+                        }
+                        CheckBox {
+                            text: "Enabled"
+                            anchors.centerIn: parent
+                            checked: comp.emulateTouch
+                            onCheckStateChanged: comp.emulateTouch = checked
                         }
                     }
                 }
