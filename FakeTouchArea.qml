@@ -13,8 +13,10 @@ MouseArea {
         seat.sendTouchFrameEvent(surface.client);
     }
     onPositionChanged: {
-        seat.sendTouchPointMoved(surface, 0, Qt.point(mouseX, mouseY));
-        seat.sendTouchFrameEvent(surface.client);
+        if (pressed) {
+            seat.sendTouchPointMoved(surface, 0, Qt.point(mouseX, mouseY));
+            seat.sendTouchFrameEvent(surface.client);
+        }
     }
     onReleased: {
         seat.sendTouchPointReleased(surface, 0, Qt.point(mouseX, mouseY));
