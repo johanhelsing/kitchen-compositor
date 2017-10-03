@@ -87,8 +87,9 @@ WaylandCompositor {
                                 shellSurface: modelData
                                 onSurfaceDestroyed: {
                                     shellSurfaces.remove(index);
-                                    if(shellSurface === comp.selectedShellSurface)
+                                    if (shellSurface === comp.selectedShellSurface) {
                                         comp.selectedShellSurface = null;
+                                    }
                                 }
                                 Component.onCompleted: console.log("Shell surface item created");
                                 WindowGeometryGizmo {
