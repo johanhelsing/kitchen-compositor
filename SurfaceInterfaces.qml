@@ -65,6 +65,24 @@ ColumnLayout {
         }
 
         Repeater {
+            model: xdgToplevel ? 1 : 0
+            XdgToplevelV6Config { // Using v6 for now
+                title: "xdg_surface"
+                toplevel: xdgToplevel
+                anchors.centerIn: parent
+            }
+        }
+
+        Repeater {
+            model: xdgSurface ? 1 : 0
+            XdgSurfaceV6Config { // Using v6 for now
+                title: "xdg_surface"
+                xdgSurface: surfaceInterfaces.xdgSurface
+                anchors.centerIn: parent
+            }
+        }
+
+        Repeater {
             model: xdgSurfaceV6 ? 1 : 0
             XdgSurfaceV6Config {
                 xdgSurface: xdgSurfaceV6

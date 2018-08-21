@@ -234,6 +234,14 @@ WaylandCompositor {
         }
     }
 
+    XdgShell {
+        id: xdgShell
+        onToplevelCreated: {
+            console.log("xdg_toplevel created", xdgSurface, toplevel);
+            shellSurfaces.append({shellSurface: xdgSurface});
+        }
+    }
+
     onSurfaceCreated: {
         console.log("Surface created", surface);
     }
