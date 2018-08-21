@@ -1,5 +1,5 @@
 import QtQuick 2.6
-import QtWayland.Compositor 1.1
+import QtWayland.Compositor 1.3
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
@@ -9,11 +9,23 @@ ColumnLayout {
     property variant shellSurface
 
     //TODO: This is ugly, find a better way
-    property WaylandSurface surface: shellSurface.surface
-    property WlShellSurface wlShellSurface: shellSurface
-    property XdgToplevelV6 xdgToplevelV6: shellSurface && shellSurface.toplevel
-    property XdgSurfaceV6 xdgSurfaceV6: xdgToplevelV6 && shellSurface
-    property XdgSurfaceV5 xdgSurfaceV5: shellSurface
+    function castQmlType(obj, type) {
+        return (obj && obj instanceof type) ? obj : null;
+    }
+    function castClassName(obj, name) {
+        return (obj && obj.toString().includes(name+"(")) ? obj : null;
+    }
+    property variant surface: shellSurface.surface
+
+    property XdgToplevel xdgToplevel: shellSurface && castQmlType(shellSurface.toplevel, XdgToplevel)
+    property variant xdgSurface: castClassName(shellSurface, "QWaylandXdgSurface")
+
+    property XdgToplevelV6 xdgToplevelV6: shellSurface && castQmlType(shellSurface.toplevel, XdgToplevelV6)
+    property variant xdgSurfaceV6: castClassName(shellSurface, "QWaylandXdgSurfaceV6")
+
+    property variant xdgSurfaceV5: castClassName(shellSurface, "QWaylandXdgSurfaceV5")
+
+    property variant wlShellSurface: castClassName(shellSurface, "QWaylandWlShellSurface")
 
     TabBar {
         Layout.fillWidth: true

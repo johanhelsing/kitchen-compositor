@@ -1,10 +1,10 @@
 import QtQuick 2.6
-import QtWayland.Compositor 1.1
+import QtWayland.Compositor 1.3
 
 MouseArea {
     id: fakeTouchArea
     property WaylandSeat seat
-    property WaylandSurface surface
+    property variant surface
     onPressed: {
         seat.sendTouchPointPressed(surface, 0, Qt.point(mouseX, mouseY));
         seat.sendTouchFrameEvent(surface.client);
