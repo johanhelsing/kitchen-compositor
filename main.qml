@@ -85,6 +85,7 @@ WaylandCompositor {
                             ShellSurfaceItem {
                                 id: ssItem
                                 shellSurface: modelData
+                                autoCreatePopupItems: true
                                 onSurfaceDestroyed: {
                                     shellSurfaces.remove(index);
                                     if (shellSurface === comp.selectedShellSurface) {
