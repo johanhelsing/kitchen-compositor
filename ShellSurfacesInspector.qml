@@ -4,15 +4,14 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-RowLayout {
+StackView {
     property variant selectedShellSurface
-    spacing: 0
+    id: shellSurfaceInspector
 
     onSelectedShellSurfaceChanged: {
         console.log("Now inspecting shell surface", selectedShellSurface);
-        interfacesPage.clear(StackView.Immediate);
         if (selectedShellSurface)
-            interfacesPage.push("qrc:/SurfaceInterfaces.qml", {shellSurface: selectedShellSurface}, StackView.ReplaceTransition);
+            shellSurfaceInspector.push("qrc:/SurfaceInterfaces.qml", {shellSurface: selectedShellSurface}, StackView.ReplaceTransition);
     }
 
     ListView {
@@ -43,11 +42,5 @@ RowLayout {
                 }
             }
         }
-    }
-
-    StackView {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        id: interfacesPage
     }
 }

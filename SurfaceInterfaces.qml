@@ -1,10 +1,10 @@
 import QtQuick 2.6
 import QtWayland.Compositor 1.3
 import QtQuick.Window 2.2
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
 
-ColumnLayout {
+Page {
     id: surfaceInterfaces
     property variant shellSurface
 
@@ -27,74 +27,82 @@ ColumnLayout {
 
     property variant wlShellSurface: castClassName(shellSurface, "QWaylandWlShellSurface")
 
-    TabBar {
-        Layout.fillWidth: true
-        id: bar
-        currentIndex: 0
-        Repeater {
-            model: tabs.count
-            TabButton { text: tabs.itemAt(index).title }
+    header: ToolBar {
+        Label {
+            text: `${shellSurface}`
+            anchors.centerIn: parent
+        }
+        ToolButton {
+            padding: 16
+            text: "<"
+            onClicked: surfaceInterfaces.StackView.view.pop(); // this doesn't work... controls 2 bug?
         }
     }
-
-    StackLayout {
-        id: tabs
-        currentIndex: bar.currentIndex
-
-        SurfaceDetails {
-            property string title: "wl_surface"
-            id: surfaceDetails
-            anchors.centerIn: parent
-            surface: shellSurface.surface
-        }
-
-        Repeater {
-            model: xdgToplevelV6 ? 1 : 0
-            XdgToplevelV6Config {
-                toplevel: xdgToplevelV6
-                anchors.centerIn: parent
+    ColumnLayout {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        TabBar {
+            Layout.fillWidth: true
+            id: bar
+            currentIndex: 0
+            Repeater {
+                model: tabs.count
+                TabButton { text: tabs.itemAt(index).title }
             }
         }
 
-        Repeater {
-            model: xdgSurfaceV5 ? 1 : 0
-            XdgSurfaceV5Config {
-                xdgSurface: xdgSurfaceV5
-                anchors.centerIn: parent
-            }
-        }
+        StackLayout {
+            id: tabs
+            currentIndex: bar.currentIndex
 
-        Repeater {
-            model: xdgToplevel ? 1 : 0
-            XdgToplevelV6Config { // Using v6 for now
-                title: "xdg_surface"
-                toplevel: xdgToplevel
-                anchors.centerIn: parent
+            SurfaceDetails {
+                property string title: "wl_surface"
+                id: surfaceDetails
+                surface: shellSurface.surface
             }
-        }
 
-        Repeater {
-            model: xdgSurface ? 1 : 0
-            XdgSurfaceV6Config { // Using v6 for now
-                title: "xdg_surface"
-                xdgSurface: surfaceInterfaces.xdgSurface
-                anchors.centerIn: parent
+            Repeater {
+                model: xdgToplevelV6 ? 1 : 0
+                XdgToplevelV6Config {
+                    toplevel: xdgToplevelV6
+                }
             }
-        }
 
-        Repeater {
-            model: xdgSurfaceV6 ? 1 : 0
-            XdgSurfaceV6Config {
-                xdgSurface: xdgSurfaceV6
-                anchors.centerIn: parent
+            Repeater {
+                model: xdgSurfaceV5 ? 1 : 0
+                XdgSurfaceV5Config {
+                    xdgSurface: xdgSurfaceV5
+                }
             }
-        }
 
-        Repeater {
-            model: wlShellSurface ? 1 : 0
-            WlShellSurfaceConfig {
-                anchors.centerIn: parent
-                shellSurface: wlShellSurface
+            Repeater {
+                model: xdgToplevel ? 1 : 0
+                XdgToplevelV6Config { // Using v6 for now
+                    title: "xdg_surface"
+                    toplevel: xdgToplevel
+                }
+            }
+
+            Repeater {
+                model: xdgSurface ? 1 : 0
+                XdgSurfaceV6Config { // Using v6 for now
+                    title: "xdg_surface"
+                    xdgSurface: surfaceInterfaces.xdgSurface
+                }
+            }
+
+            Repeater {
+                model: xdgSurfaceV6 ? 1 : 0
+                XdgSurfaceV6Config {
+                    xdgSurface: xdgSurfaceV6
+                }
+            }
+
+            Repeater {
+                model: wlShellSurface ? 1 : 0
+                WlShellSurfaceConfig {
+                    shellSurface: wlShellSurface
+                }
             }
         }
     }

@@ -64,7 +64,7 @@ WaylandCompositor {
             visibility: Window.Maximized
             title: "Kitchen Compositor - " + comp.socketName
 
-            ColumnLayout {
+            RowLayout {
                 spacing: 0
                 id: layout
                 anchors.fill: parent
@@ -116,8 +116,8 @@ WaylandCompositor {
 
                 StackLayout {
                     id: inspectorRoot
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 500
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: 500
                     currentIndex: 1
                     Page {
                         anchors.fill: parent
