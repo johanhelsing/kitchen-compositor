@@ -31,10 +31,8 @@ StackView {
                     id: thumbnail
                     sizeFollowsSurface: false
                     enabled: false
-                    width: 32
-                    height: 32
-                    implicitWidth: 32
-                    implicitHeight: 32
+                    Layout.preferredWidth: 32
+                    Layout.preferredHeight: 32
                     surface: modelData.surface
                 }
                 Label {

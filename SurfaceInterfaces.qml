@@ -27,6 +27,7 @@ Page {
 
     property variant wlShellSurface: castClassName(shellSurface, "QWaylandWlShellSurface")
 
+    Layout.fillWidth: true
     header: ToolBar {
         Label {
             text: `${shellSurface}`
@@ -39,8 +40,7 @@ Page {
         }
     }
     ColumnLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
+        anchors.fill: parent
         TabBar {
             Layout.fillWidth: true
             id: bar
@@ -49,9 +49,12 @@ Page {
                 model: tabs.count
                 TabButton { text: tabs.itemAt(index).title }
             }
+            z: 1
         }
 
         StackLayout {
+            Layout.maximumWidth: parent.width
+            Layout.fillWidth: true
             id: tabs
             currentIndex: bar.currentIndex
 
