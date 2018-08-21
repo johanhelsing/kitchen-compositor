@@ -34,6 +34,28 @@ ColumnLayout {
         return "unknown";
     }
 
+    WaylandQuickItem {
+        id: ssItem
+        enabled: false
+        surface: parent.surface
+        sizeFollowsSurface: false
+        function takeScreenshot(surface, filename) {
+            ssItem.grabToImage(function(image) {
+                if (image.saveToFile(filename)) {
+                    console.log(`Saved screenshot: ${filename}`);
+                } else {
+                    console.log(`Failed to save screenshot: ${filename}`);
+                }
+            });
+        }
+    }
+
+    RowLayout {
+        TextField { id: filename; text: "screenshot.png"; }
+        //Button { text: "Take screenshot"; onClicked: ssItem.takeScreenshot(surface, filename.text) }
+        Button { text: "Take screenshot"; onClicked: ssItem.takeScreenshot(surface, filename.text) }
+    }
+
     Label { text: "Size: " + surface.size }
     Label { text: "Buffer scale: " + surface.bufferScale }
     Label { text: "Origin: " + originToString(surface.origin) }
