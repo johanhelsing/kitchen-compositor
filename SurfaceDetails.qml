@@ -67,30 +67,33 @@ ScrollView {
             }
         }
 
-        RowLayout {
-            TextField { id: filename; text: "screenshot.png"; }
-            Button { text: "Take screenshot"; onClicked: surfaceItemHidden.takeScreenshot(surface, filename.text) }
+        ColumnLayout {
+            Layout.alignment: Qt.AlignCenter
+            RowLayout {
+                TextField { id: filename; text: "screenshot.png"; }
+                Button { text: "Take screenshot"; onClicked: surfaceItemHidden.takeScreenshot(surface, filename.text) }
+            }
+
+            Label { text: "Size: " + surface.size }
+            Label { text: "Buffer scale: " + surface.bufferScale }
+            Label { text: "Origin: " + originToString(surface.origin) }
+            Label { text: "Content orientation: " + orientationToString(surface.contentOrientation) }
+            Label { text: "Client: " + surface.client }
+
+            CheckBox { text: "Has content"; checked: surface.hasContent; enabled: false }
+            CheckBox { text: "Cursor surface"; checked: surface.cursorSurface; enabled: false }
+
+            Button { text: "Close client"; onClicked: surface.client.close() }
+            RowLayout {
+                Label { text: "Signal: " }
+                TextField { id: killSignal; inputMethodHints: Qt.ImhDigitsOnly; text: "9" }
+                Button { text: "Kill client"; onClicked: surface.client.close() }
+            }
+
+            Label { text: "Client process id: " + surface.client.processId }
+            Label { text: "Client user id: " + surface.client.userId }
+            Label { text: "Client group id: " + surface.client.groupId }
         }
-
-        Label { text: "Size: " + surface.size }
-        Label { text: "Buffer scale: " + surface.bufferScale }
-        Label { text: "Origin: " + originToString(surface.origin) }
-        Label { text: "Content orientation: " + orientationToString(surface.contentOrientation) }
-        Label { text: "Client: " + surface.client }
-
-        CheckBox { text: "Has content"; checked: surface.hasContent; enabled: false }
-        CheckBox { text: "Cursor surface"; checked: surface.cursorSurface; enabled: false }
-
-        Button { text: "Close client"; onClicked: surface.client.close() }
-        RowLayout {
-            Label { text: "Signal: " }
-            TextField { id: killSignal; inputMethodHints: Qt.ImhDigitsOnly; text: "9" }
-            Button { text: "Kill client"; onClicked: surface.client.close() }
-        }
-
-        Label { text: "Client process id: " + surface.client.processId }
-        Label { text: "Client user id: " + surface.client.userId }
-        Label { text: "Client group id: " + surface.client.groupId }
 
     }
 }
