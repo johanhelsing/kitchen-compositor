@@ -8,13 +8,23 @@ StackView {
     property variant selectedShellSurface
     id: shellSurfaceInspector
 
+    Component {
+        id: interfacesPage
+        SurfaceInterfaces {
+            onBackClicked: {
+                shellSurfaceInspector.pop()
+                selectedShellSurface = null;
+            }
+        }
+    }
+
     onSelectedShellSurfaceChanged: {
         console.log("Now inspecting shell surface", selectedShellSurface);
         if (selectedShellSurface)
-            shellSurfaceInspector.push("qrc:/SurfaceInterfaces.qml", {shellSurface: selectedShellSurface}, StackView.ReplaceTransition);
+            shellSurfaceInspector.push(interfacesPage, {shellSurface: selectedShellSurface}, StackView.ReplaceTransition);
     }
 
-    ListView {
+    initialItem: ListView {
         id: listView
         Layout.fillHeight: true
         implicitWidth: 300

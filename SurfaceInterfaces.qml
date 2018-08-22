@@ -24,6 +24,8 @@ Page {
 
     property WlShellSurface wlShellSurface: cast(WlShellSurface, shellSurface)
 
+    signal backClicked
+
     Layout.fillWidth: true
     header: ToolBar {
         Label {
@@ -33,7 +35,7 @@ Page {
         ToolButton {
             padding: 16
             text: "<"
-            onClicked: surfaceInterfaces.StackView.view.pop(); // this doesn't work... controls 2 bug?
+            onClicked: surfaceInterfaces.backClicked()
         }
     }
     ColumnLayout {

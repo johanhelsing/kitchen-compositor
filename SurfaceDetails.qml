@@ -8,34 +8,35 @@ ScrollView {
     id: surfaceDetails
     property WaylandSurface surface
     property string title: "wl_surface"
+
+    function originToString(o) {
+        switch (o) {
+        case WaylandSurface.OriginTopLeft:
+            return "top left";
+        case WaylandSurface.OriginBottomLeft:
+            return "bottom left";
+        }
+        return "unknown";
+    }
+
+    function orientationToString(o) {
+        switch (o) {
+        case Qt.PrimaryOrientation:
+            return "primary";
+        case Qt.PortraitOrientation:
+            return "portrait";
+        case Qt.LandscapeOrientation:
+            return "landscape";
+        case Qt.InvertedPortraitOrientation:
+            return "inverted portrait";
+        case Qt.InvertedLandscapeOrientation:
+            return "inverted landscape";
+        }
+        return "unknown";
+    }
+
     ColumnLayout {
         width: surfaceDetails.width
-
-        function originToString(o) {
-            switch (o) {
-            case WaylandSurface.OriginTopLeft:
-                return "top left";
-            case WaylandSurface.OriginBottomLeft:
-                return "bottom left";
-            }
-            return "unknown";
-        }
-
-        function orientationToString(o) {
-            switch (o) {
-            case Qt.PrimaryOrientation:
-                return "primary";
-            case Qt.PortraitOrientation:
-                return "portrait";
-            case Qt.LandscapeOrientation:
-                return "landscape";
-            case Qt.InvertedPortraitOrientation:
-                return "inverted portrait";
-            case Qt.InvertedLandscapeOrientation:
-                return "inverted landscape";
-            }
-            return "unknown";
-        }
 
         Item { Layout.fillWidth: true /* spacer */ }
 

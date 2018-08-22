@@ -120,7 +120,6 @@ WaylandCompositor {
                     Layout.preferredWidth: 500
                     currentIndex: 1
                     Page {
-                        anchors.fill: parent
                         header: ToolBar {
                             Label {
                                 text: "Choose tool"
@@ -140,7 +139,6 @@ WaylandCompositor {
                     }
                     Page {
                         title: "Shell surface inspector"
-                        anchors.fill: parent
                         id: shellSurfacesInspectorPage
                         header: ToolBar {
                             ToolButton {
@@ -161,7 +159,6 @@ WaylandCompositor {
                     }
                     Page {
                         title: "Output configuration"
-                        anchors.fill: parent
                         header: ToolBar {
                             ToolButton {
                                 padding: 16
@@ -180,7 +177,6 @@ WaylandCompositor {
                     }
                     Page {
                         title: "Misc settings"
-                        anchors.fill: parent
                         header: ToolBar {
                             ToolButton {
                                 padding: 16
