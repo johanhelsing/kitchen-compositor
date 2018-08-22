@@ -78,7 +78,7 @@ Page {
             Repeater {
                 model: xdgToplevel ? 1 : 0
                 XdgToplevelV6Config { // Using v6 for now
-                    title: "xdg_surface"
+                    title: "xdg_toplevel"
                     toplevel: xdgToplevel
                 }
             }
