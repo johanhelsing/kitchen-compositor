@@ -70,7 +70,7 @@ ScrollView {
         ColumnLayout {
             Layout.alignment: Qt.AlignCenter
             RowLayout {
-                TextField { id: filename; text: "screenshot.png"; }
+                TextField { id: filename; text: `screenshot-${Date.now()}.png`; }
                 Button { text: "Take screenshot"; onClicked: surfaceItemHidden.takeScreenshot(surface, filename.text) }
             }
 
