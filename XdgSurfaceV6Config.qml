@@ -12,10 +12,10 @@ ScrollView {
         width: xdgSurfaceV6Config.width
         Item { Layout.fillWidth: true /* spacer */ }
         WaylandQuickItem {
+            id: windowGeometryView
             Layout.maximumWidth: Math.min(implicitWidth, parent.width)
             Layout.preferredHeight: surface.size.height * width / surface.size.width
             Layout.alignment: Qt.AlignCenter
-            id: windowGeometryView
             surface: xdgSurface.surface
             enabled: false
             property real ratio: width / surface.size.width
@@ -27,14 +27,10 @@ ScrollView {
                 border.width: 1
                 color: "transparent"
             }
-            Rectangle {
-                border.color: "red"
-                border.width: 1
-                color: "transparent"
-                x: xdgSurface.windowGeometry.x * windowGeometryView.ratio
-                y: xdgSurface.windowGeometry.y * windowGeometryView.ratio
-                width: xdgSurface.windowGeometry.width * windowGeometryView.ratio
-                height: xdgSurface.windowGeometry.height * windowGeometryView.ratio
+            WindowGeometryGizmo {
+                windowGeometry: xdgSurface.windowGeometry
+                bufferScale: xdgSurface.surface.bufferScale * windowGeometryView.ratio
+                Component.onCompleted: console.log("bufferScale", xdgSurface.surface.bufferScale, windowGeometryView.ratio)
             }
         }
 

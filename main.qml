@@ -96,6 +96,7 @@ WaylandCompositor {
                                 WindowGeometryGizmo {
                                     visible: comp.showGizmos
                                     windowGeometry: (ssItem.shellSurface && ssItem.shellSurface.windowGeometry) || Qt.rect(0,0,0,0)
+                                    bufferScale: (ssItem.surface && ssItem.surface.bufferScale) || 1
                                 }
                                 FakeTouchArea {
                                     visible: comp.emulateTouch
