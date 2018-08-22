@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
-    property variant toplevel
+    property variant toplevel // variant because we want to duck type with xdg-shell stable
     property string title: "zxdg_toplevel_v6"
 
     Label { text: "Title: " + toplevel.title }

@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.3
 
 ColumnLayout {
     property string title: "wl_shell_surface"
-    property variant shellSurface
+    property WlShellSurface shellSurface
 
     Label { text: "Title: " + shellSurface.title }
     Label { text: "Class name: " + shellSurface.className }

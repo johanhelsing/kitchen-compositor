@@ -9,23 +9,20 @@ Page {
     property variant shellSurface
 
     //TODO: This is ugly, find a better way
-    function castQmlType(obj, type) {
+    function cast(type, obj) {
         return (obj && obj instanceof type) ? obj : null;
     }
-    function castClassName(obj, name) {
-        return (obj && obj.toString().includes(name+"(")) ? obj : null;
-    }
-    property variant surface: shellSurface.surface
+    property WaylandSurface surface: cast(WaylandSurface, shellSurface.surface)
 
-    property XdgToplevel xdgToplevel: shellSurface && castQmlType(shellSurface.toplevel, XdgToplevel)
-    property variant xdgSurface: castClassName(shellSurface, "QWaylandXdgSurface")
+    property XdgToplevel xdgToplevel: shellSurface && cast(XdgToplevel, shellSurface.toplevel)
+    property XdgSurface xdgSurface: cast(XdgSurface, shellSurface)
 
-    property XdgToplevelV6 xdgToplevelV6: shellSurface && castQmlType(shellSurface.toplevel, XdgToplevelV6)
-    property variant xdgSurfaceV6: castClassName(shellSurface, "QWaylandXdgSurfaceV6")
+    property XdgToplevelV6 xdgToplevelV6: shellSurface && cast(XdgToplevelV6, shellSurface.toplevel)
+    property XdgSurfaceV6 xdgSurfaceV6: cast(XdgSurfaceV6, shellSurface)
 
-    property variant xdgSurfaceV5: castClassName(shellSurface, "QWaylandXdgSurfaceV5")
+    property XdgSurfaceV5 xdgSurfaceV5: cast(XdgSurfaceV5, shellSurface)
 
-    property variant wlShellSurface: castClassName(shellSurface, "QWaylandWlShellSurface")
+    property WlShellSurface wlShellSurface: cast(WlShellSurface, shellSurface)
 
     Layout.fillWidth: true
     header: ToolBar {

@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.3
 
 ColumnLayout {
     property string title: "zxdg_surface_v6"
-    property variant xdgSurface
+    property variant xdgSurface // variant because of duck typing with the stable version
     Label { text: "Window geometry: " + xdgSurface.windowGeometry }
     Label { text: "Surface size: " + xdgSurface.surface.size }
     CheckBox { text: "Toplevel"; checked: xdgSurface.toplevel; enabled: false }

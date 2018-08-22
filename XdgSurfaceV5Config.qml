@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
-    property variant xdgSurface
+    property XdgSurfaceV5 xdgSurface
     property string title: "xdg_surface (v5)"
 
     CheckBox { text: "Maximized"; checked: xdgSurface.maximized; enabled: false; }

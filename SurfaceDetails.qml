@@ -6,7 +6,7 @@ import QtWayland.Compositor 1.3
 
 ScrollView {
     id: surfaceDetails
-    property variant surface
+    property WaylandSurface surface
     property string title: "wl_surface"
     ColumnLayout {
         width: surfaceDetails.width
