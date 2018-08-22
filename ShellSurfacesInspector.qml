@@ -12,16 +12,19 @@ StackView {
         id: interfacesPage
         SurfaceInterfaces {
             onBackClicked: {
-                shellSurfaceInspector.pop()
-                selectedShellSurface = null;
+                shellSurfaceInspector.pop(null);
+                shellSurfaceInspector.selectedShellSurface = null
             }
         }
     }
 
     onSelectedShellSurfaceChanged: {
         console.log("Now inspecting shell surface", selectedShellSurface);
-        if (selectedShellSurface)
+        if (selectedShellSurface) {
             shellSurfaceInspector.push(interfacesPage, {shellSurface: selectedShellSurface}, StackView.ReplaceTransition);
+        } else {
+            pop(null);
+        }
     }
 
     initialItem: ListView {
@@ -49,6 +52,14 @@ StackView {
                     text: modelData.title || (modelData.toplevel && modelData.toplevel.title) || ("Shell surface #" + index)
                 }
             }
+        }
+    }
+
+    Connections {
+        target: selectedShellSurface ? selectedShellSurface.surface : null
+        onSurfaceDestroyed: {
+            pop(null);
+            selectedShellSurface = null
         }
     }
 }
