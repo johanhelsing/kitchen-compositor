@@ -4,6 +4,7 @@ Wayland compositor for manual testing. Let's you easily inspect and send events 
 
 ## Dependencies
 
-- QtBase 5.9+
-- QtDeclarative 5.9+
-- QtWayland dev branch
+- Qt 5.12 or newer with:
+  - QtBase
+  - QtDeclarative
+  - QtWayland
