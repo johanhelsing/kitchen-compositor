@@ -51,10 +51,12 @@ WaylandCompositor {
     property bool showGizmos: false
 
     ListModel { id: shellSurfaces }
+    ListModel { id: surfaces }
 
     WaylandOutput {
         id: output
         sizeFollowsWindow: true
+        scaleFactor: 1
         availableGeometry: win.contentItem.mapFromItem(surfaceArea, 0, 0, surfaceArea.width, surfaceArea.height)
         window: ApplicationWindow {
             id: win
@@ -119,7 +121,7 @@ WaylandCompositor {
                     id: inspectorRoot
                     Layout.fillHeight: true
                     Layout.preferredWidth: 500
-                    currentIndex: 1
+                    currentIndex: 2
                     Page {
                         header: ToolBar {
                             Label {
@@ -156,6 +158,24 @@ WaylandCompositor {
                         ShellSurfacesInspector {
                             anchors.fill: parent
                             id: shellSurfacesInspector
+                        }
+                    }
+                    Page {
+                        title: "wl_surfaces"
+                        header: ToolBar {
+                            ToolButton {
+                                padding: 16
+                                text: "<"
+                                onClicked: inspectorRoot.currentIndex = 0
+                            }
+
+                            Label {
+                                text: "wl_surfaces"
+                                anchors.centerIn: parent
+                            }
+                        }
+                        SurfacesInspector {
+                            anchors.fill: parent
                         }
                     }
                     Page {
@@ -242,5 +262,15 @@ WaylandCompositor {
 
     onSurfaceCreated: {
         console.log("Surface created", surface);
+        surfaces.append({surface: surface});
+    }
+
+    onSurfaceAboutToBeDestroyed: {
+        console.log("Surface about to be destroyed", surface);
+        for (let i = 0; i < surfaces.count; ++i) {
+            if (surfaces.get(i).surface == surface) {
+                surfaces.remove(i);
+            }
+        }
     }
 }

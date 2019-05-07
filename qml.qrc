@@ -12,5 +12,6 @@
         <file>OutputConfiguration.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>FakeTouchArea.qml</file>
+        <file>SurfacesInspector.qml</file>
     </qresource>
 </RCC>
